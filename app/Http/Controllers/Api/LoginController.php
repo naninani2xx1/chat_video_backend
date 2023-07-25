@@ -37,7 +37,7 @@ class LoginController extends BaseController
             $map['avatar'] = $validated['avatar'];
 
             $result = DB::table('users')
-            ->select('name','description','type','token','access_token','online')
+            ->select('name','description','type','token','access_token','online','avatar')
             ->where($map)->first();
      
             $validated['access_token'] = md5(uniqid().rand(10000,99999));
@@ -67,4 +67,15 @@ class LoginController extends BaseController
            return $this->sendRepo(-1,"",(String)$e);
         }
     }
+
+    public function contact(Request $request){
+        $token = $request->query('user_token');
+        
+        $res =DB::table('users')->select('avatar','description','online','token','name')
+        ->where('token','!=',$token)->get();
+
+        return $this->sendRepo(0,"got all the users info",$res); 
+    }
+
+    
 }

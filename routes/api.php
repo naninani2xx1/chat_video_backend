@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::any('/login','\App\Http\Controllers\Api\LoginController@login');
+Route::any('/contact','\App\Http\Controllers\Api\LoginController@contact')->middleware('CheckUser');
